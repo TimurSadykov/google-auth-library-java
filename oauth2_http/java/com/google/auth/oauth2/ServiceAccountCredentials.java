@@ -82,6 +82,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * OAuth2 credentials representing a Service Account for calling Google APIs.
@@ -654,12 +656,15 @@ public class ServiceAccountCredentials extends GoogleCredentials
     String rawToken = OAuth2Utils.validateString(responseData, "id_token", PARSE_ERROR_PREFIX);
 
     System.out.println("idTokenRefresh");
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    
+    ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
+
+    exec.schedule(new Runnable() {
+          public void run() {
+            System.out.println("idTokenRefresh done");
+          }
+     }, 10, TimeUnit.SECONDS);
+    
     return IdToken.create(rawToken);
   }
 
