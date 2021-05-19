@@ -654,16 +654,14 @@ public class ServiceAccountCredentials extends GoogleCredentials
 
     GenericData responseData = response.parseAs(GenericData.class);
     String rawToken = OAuth2Utils.validateString(responseData, "id_token", PARSE_ERROR_PREFIX);
-
-    System.out.println("idTokenRefresh");
-    
-    ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
-
-    exec.schedule(new Runnable() {
-          public void run() {
-            System.out.println("idTokenRefresh done");
-          }
-     }, 10, TimeUnit.SECONDS);
+    System.out.println("idTokenRefresh sleep " + Thread.currentThread().getId());
+    try {
+      Thread.sleep(5000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    System.out.println("idTokenRefresh done " + Thread.currentThread().getId());
     
     return IdToken.create(rawToken);
   }

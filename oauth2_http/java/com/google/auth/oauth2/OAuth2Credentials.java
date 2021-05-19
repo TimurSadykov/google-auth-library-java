@@ -216,7 +216,7 @@ public class OAuth2Credentials extends Credentials {
       // Immediately resolve the token token if its not expired, or wait for the refresh task to
       // complete
       if (getState() != CacheState.EXPIRED) {
-        System.out.println("in asyncRefresh: lock, already refreshed - return");
+        System.out.println("in asyncRefresh lock, return with State " + getState());
         return Futures.immediateFuture(value);
       } else if (refreshResult != null) {
         System.out.println("in asyncRefresh: lock, await refresh");
