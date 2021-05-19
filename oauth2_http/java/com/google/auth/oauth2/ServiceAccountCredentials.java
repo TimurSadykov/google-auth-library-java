@@ -653,6 +653,13 @@ public class ServiceAccountCredentials extends GoogleCredentials
     GenericData responseData = response.parseAs(GenericData.class);
     String rawToken = OAuth2Utils.validateString(responseData, "id_token", PARSE_ERROR_PREFIX);
 
+    System.out.println("idTokenRefresh");
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     return IdToken.create(rawToken);
   }
 
